@@ -30,8 +30,8 @@ db.execute(
     table_id SERIAL PRIMARY KEY,
     name TEXT,
     filename VARCHAR(28) UNIQUE,
-    modular_extension VARCHAR(5) UNIQUE,
-    description TEXT,    
+    modular_extension VARCHAR(5),
+    description TEXT    
     );
     """
 )
@@ -47,17 +47,8 @@ db.execute(
         parent_id INTEGER,
         version_added TEXT,
         deprecation_id INTEGER,
-    )
-    """
-)
-
-# Add Foreign Key to link table and items tables
-db.execute(
-    """
-    ALTER TABLE items 
-    ADD CONSTRAINT fk_items_tables
-    FOREIGN KEY (table_id)
-    REFERENCES tables(table_id)
+        FOREIGN KEY (table_id) REFERENCES tables(table_id)
+    );
     """
 )
 
@@ -68,7 +59,7 @@ db.execute(
     alias_id SERIAL PRIMARY KEY,
     table_id INTEGER NOT NULL,
     filename VARCHAR(28) UNIQUE
-    )
+    );
     """
 )
 
