@@ -132,13 +132,23 @@ db.execute(
     """
 )
 
-#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "+nocreate", "Allows editing of the AI class entry without creating a new entry", "NULL", "", ,"23.2"),
-#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "$Accuracy:", "How accurately the ship fires its weapons. Value is used to scale the error in the AI aim. With repeated shots, AI aim will improve. Note that the AI is always 100% accurate when aiming for subsystems, according to Retail code.", "FLOAT_LIST5", "", ,""),
-#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "", "", "", "", ,""),
-
-
 ### Uncomment to test ai table population.
-#test = db.execute("SELECT * FROM items WHERE filename = 'Ai'")
+#test = db.execute("SELECT * FROM items WHERE table_id = (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)")
+#
+#for item in test:
+#    print(item)
+
+# populate tips table
+db.execute(
+    """
+    INSERT INTO items(item_text, documentation, info_type, major_version_added, table_id) VALUES
+    ("+Tip", "Defines the text for the tip as an XSTR (provides translation index).", "XSTR", "2.0", (SELECT table_id FROM tables WHERE filename = 'Tips' LIMIT 1)),
+    ("#End", "Ends the table.", "NULL", 2.0, (SELECT table_id FROM tables WHERE filename = 'Tips' LIMIT 1))
+    """
+)
+
+### Uncomment to test tips table population.
+#test = db.execute("SELECT * FROM items WHERE table_id = (SELECT table_id FROM tables WHERE filename = 'Tips' LIMIT 1)")
 #
 #for item in test:
 #    print(item)
