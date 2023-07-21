@@ -1,4 +1,7 @@
 import sqlite3 as sql
+import fso_td_init as init
+
+init.init_db()
 
 database = sql.connect('db/fso_td.db')
 
@@ -58,7 +61,33 @@ db.execute(
     """
 )
 
-test = db.execute("SELECT * FROM tables")
+### Uncomment to test table population.
+#test = db.execute("SELECT * FROM tables")
+#
+#for item in test:
+#    print(item)
+
+result = db.execute("SELECT table_id, filename FROM tables")
+
+#            item_text TEXT NOT NULL,
+#            documentation TEXT,
+#            info_type TEXT,
+#            major_version_added TEXT,
+
+# Add AI table entries
+db.execute(
+    """
+    INSERT INTO items(table_id, item_text, documentation, info_type, version_added) VALUES
+    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "REQUIRED,IDENTIFIER", NULL, "2.0")
+    """
+)
+
+#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "+nocreate", "Allows editing of the ai class entry without creating a new entry", "NULL", "", ,"23.2"),
+#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "$Accuracy:", "How accurately the ship fires its weapons. Value is used to scale the error in the AI aim. With repeated shots, AI aim will improve. Note that the AI is always 100% accurate when aiming for subsystems, according to Retail code.", "FLOAT_LIST", "", ,""),
+#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "", "", "", "", ,""),
+
+
+test = db.execute("SELECT * FROM items")
 
 for item in test:
     print(item)
