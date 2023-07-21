@@ -28,7 +28,7 @@ db.execute(
     ("Hud Gauges","Hud_gauges", "hdg", "Used for modifying the elements of the HUD. Not all gauges can be modified."),
     ("Icons","Icons", "ico", "Defines icons used in mission briefings."),
     ("IFF Entries","Iff_defs", "iff", "Stores data on FS2's IFF (Identification Friend or Foe) entries."),
-    ("Lighting Profiles","Lighting_Profiles", "ltp", " provides controls for the game's lighting and rendering pipeline."),
+    ("Lighting Profiles","Lighting_Profiles", "ltp", "Provides controls for the game's lighting and rendering pipeline."),
     ("Lightning Storms","Lightning", "ltng", "Used to define the different storms seen in game"),
     ("Mainhalls","Mainhall", "hall", "Used to define the various main menu screens in the game"),
     ("Medals","Medals", "mdl", "Used for defining the various medals the player can achieve while playing the game."),

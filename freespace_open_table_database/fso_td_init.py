@@ -19,7 +19,7 @@ db.execute(
 
 db.execute(
     """
-    DROP TABLE IF EXISTS table_aliases ;
+    DROP TABLE IF EXISTS table_aliases;
     """
 )
 
@@ -27,7 +27,7 @@ db.execute(
 db.execute(
     """
     CREATE TABLE tables (
-    table_id SERIAL PRIMARY KEY,
+    table_id INTEGER RIMARY KEY AUTOINCREMENT NOT NULL,
     name TEXT,
     filename VARCHAR(28) UNIQUE,
     modular_extension VARCHAR(5),
@@ -40,7 +40,7 @@ db.execute(
 db.execute(
     """
     CREATE TABLE items (
-        item_id SERIAL PRIMARY KEY,
+        item_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
         table_id INTEGER,
         item_text TEXT NOT NULL,
         documentation TEXT,
@@ -56,7 +56,7 @@ db.execute(
 db.execute(
     """
     CREATE TABLE table_aliases(
-    alias_id SERIAL PRIMARY KEY,
+    alias_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
     table_id INTEGER NOT NULL,
     filename VARCHAR(28) UNIQUE
     );
