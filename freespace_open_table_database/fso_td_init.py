@@ -85,8 +85,7 @@ def init_db():
         name TEXT,
         filename VARCHAR(28) UNIQUE,
         modular_extension VARCHAR(5),
-        description TEXT,
-
+        description TEXT
         );
         """
     )

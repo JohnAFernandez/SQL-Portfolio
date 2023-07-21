@@ -9,6 +9,13 @@ db = database.cursor()
 
 db.execute(
     """
+    INSERT INTO restrictions(min_value, max_value) VALUES
+    (0.0, 1.0);
+    """
+)
+
+db.execute(
+    """
     INSERT INTO tables(name, filename, modular_extension, description) VALUES 
     ("AI Classes","Ai", "aic", "Defines the AI classes used in the game. This table is used to define each AI class with four abilities for each difficulty level."),
     ("AI Profiles","Ai_profiles", "aip", "Allows the creation and management of different patterns of AI behavior, called profiles. Profiles consist of various statistics and flags that provide some control over AI behavior. All options within a profile are optional; if an option is not specified it will follow the original FreeSpace 2 retail behavior. Different missions can specify different profiles."),
@@ -67,23 +74,54 @@ db.execute(
 #for item in test:
 #    print(item)
 
-result = db.execute("SELECT table_id, filename FROM tables")
 
+# quick hint
 #            item_text TEXT NOT NULL,
 #            documentation TEXT,
 #            info_type TEXT,
 #            major_version_added TEXT,
 
-# Add AI table entries
+# Add AI table items
 db.execute(
     """
     INSERT INTO items(item_text, documentation, info_type, major_version_added, table_id) VALUES
-    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1))
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("+nocreate", "Allows editing of the ai class entry without creating a new entry","NULL","23.2", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Accuracy:", "Allows editing of the ai class entry without creating a new entry","FLOAT_LIST5","23.2", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Evasion:", "How good the ship is at evading. Value defines the frequency of AI course changes while it is evading.", "FLOAT_LIST5", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Courage:", "How likely the ship is to chance danger to accomplish goals. Basically the lower the value sooner the AI will start evading when attacked and its less likely to target turrets.", "FLOAT_LIST5", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Patience:", "How willing the ship is to wait for an advantage before pursuing goals. Implemented in 3.6.12 in conjunction with the $Stalemate Time Threshold and $Stalemate Distance Threshold options, otherwise does nothing.", "FLOAT_LIST5", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Afterburner Use Factor:", "Affects how probably it is that the AI will use afterburners in "maybe" situations. A value of 1 means always, 2 means half the time, 3 a third of the time, etc.", "INT_LIST5", "3.6.12", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Shockwave Evade Chances Per Second:", "Controls how likely it is for a ship to try to start evading a shockwave. The higher the number, the more "chances per second" the ship has to evade.", "FLOAT_LIST5", "3.6.12", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Get Away Chance:", "How likely the AI is to use a "get away" maneuver instead of simply making evasive turns. "Get away" usually involves the AI flying straight away, usually on afterburner, and making small jinking motions (instead of large evasive turns). Higher values result in more "jousting" fights. 0.0 is never, 1.0 is always.", "FLOAT_LIST5", "3.6.12", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Secondary Range Multiplier:", "Multiplier which affects from how far away the AI will begin firing secondary weapons. Capped by the actual maximum range of the weapon. Penalty for firing in nebula still applies above and beyond this. 0.0 never, 1.0 from max distance.", "FLOAT_LIST5", "3.6.12", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Autoscale by AI Class Index:", "If set to YES (default), a number of miscellaneous AI probabilities are affected by the order of the AI class in the file (for example, the chance to fire countermeasures). Classes near the beginning of the file are generally weaker than classes at the end. If set to NO, this flag will turn off that auto scaling behavior (so that the order of the AI class does not affect AI behavior).\n\n\tNote that even if this is set to NO, the other options above will still be controlled by AI class index (so if you want complete independence, you need to set all of the options listed in the "Other AI Class Attributes" category).", "BOOL_YESNO", "3.6.12", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1)),
+    
+        
     """
 )
 
 #    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "+nocreate", "Allows editing of the ai class entry without creating a new entry", "NULL", "", ,"23.2"),
-#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "$Accuracy:", "How accurately the ship fires its weapons. Value is used to scale the error in the AI aim. With repeated shots, AI aim will improve. Note that the AI is always 100% accurate when aiming for subsystems, according to Retail code.", "FLOAT_LIST", "", ,""),
+#    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "$Accuracy:", "How accurately the ship fires its weapons. Value is used to scale the error in the AI aim. With repeated shots, AI aim will improve. Note that the AI is always 100% accurate when aiming for subsystems, according to Retail code.", "FLOAT_LIST5", "", ,""),
 #    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "", "", "", "", ,""),
 
 
