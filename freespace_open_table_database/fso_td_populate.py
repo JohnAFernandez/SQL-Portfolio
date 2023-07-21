@@ -77,8 +77,8 @@ result = db.execute("SELECT table_id, filename FROM tables")
 # Add AI table entries
 db.execute(
     """
-    INSERT INTO items(table_id, item_text, documentation, info_type, version_added) VALUES
-    ((SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1), "$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "REQUIRED,IDENTIFIER", NULL, "2.0")
+    INSERT INTO items(item_text, documentation, info_type, major_version_added, table_id) VALUES
+    ("$Name:", "Defines a name for the AI class that can be used with ships.tbl and also with FRED", "TEXT", "2.0", (SELECT table_id FROM tables WHERE filename = 'Ai' LIMIT 1))
     """
 )
 
