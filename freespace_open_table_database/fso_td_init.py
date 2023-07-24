@@ -1,4 +1,8 @@
 import sqlite3 as sql
+import populate_tables as tables
+import ai as ai
+
+import populate_minor as minor
 
 def init_db():
     database = sql.connect('db/fso_td.db')
@@ -128,3 +132,10 @@ def init_db():
     )
 
     print('Init Successful')
+
+
+# initialize everything
+init_db()
+tables.init_tables()
+ai.init_ai()
+minor.init_minor_tables()
